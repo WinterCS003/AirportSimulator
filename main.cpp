@@ -50,7 +50,7 @@ int main(int argc, char* argv[]){
     int new_landing = -1;
     int new_takeoff = -1;
     int fuel = -1;
-    int time = -1;
+    unsigned int time = 0;
     for(int i = 1; i < argc; i++)
     {
         std::string arg = argv[i];

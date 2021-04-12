@@ -1,7 +1,7 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
-const int SIZE = 100;
+const int SIZE = 10000;
 
 template <class T>
 class Queue{
@@ -91,6 +91,7 @@ template <class T>
 bool Queue<T>::insert(T value) // IN - value to insert
 {
     if(isFull()){
+        throw "Queue is full";
         return false;
     }
 
@@ -120,6 +121,7 @@ template <class T>
 bool Queue<T>::remove()
 {
     if(isEmpty()){
+        throw "Queue is empty";
         return false;
     }
 

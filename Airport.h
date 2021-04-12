@@ -16,7 +16,7 @@ class Airport{
         int _new_landing = -1;  // IN - time between landings
         int _new_takeoff = -1;  // IN - time between takeoffs
         int _fuel = -1;         // IN - total fuel of plane
-        int _time = -1;         // IN - total time to simulate
+        unsigned int _time = -1;         // IN - total time to simulate
 
         // For creating new Airplanes
         int _crashed = 0;            // CALC - total planes that crashed

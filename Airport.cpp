@@ -51,17 +51,17 @@ Airport::Airport(int landing,     // IN - time spent landing
  ***********************************************************/
 void Airport::run(){
     srand(time(NULL));
-    for(int timeElapsed = 1; timeElapsed <= _time; timeElapsed++){
+    for(unsigned int timeElapsed = 1; timeElapsed <= _time; timeElapsed++){
         // add 1 to time of all planes spent in queue
         _landing_Queue.incrementObjects();
         _takeoff_Queue.incrementObjects();
 
-        // generate new planes - should be random?
-        if(rand()%_time < _new_landing){
+        // randomly generate arrival and departure times
+        if(rand()%_time < _time/_new_landing){
             Airplane land(_landing_time, -1, _fuel);
             _landing_Queue.insert(land);
         }
-        if(rand()%_time < _new_takeoff){
+        if(rand()%_time < _time/_new_takeoff){
             Airplane takeOff(-1, _takeoff, -1);
             _takeoff_Queue.insert(takeOff);
         }
@@ -139,7 +139,7 @@ void Airport::generate_report() const
     double average = 0.0;
     if(report.is_open()){
         report << "--------------Begin Report--------------\n\n";
-        report << "INPUT:\n";
+        report << "INPUTS:\n";
         report << "Total time simulated: " << _time << "\n";
         report << "Amount needed for one plane to land: " << _landing_time << "\n";
         report << "Amount needed for one plane to take off: " << _takeoff << "\n";
