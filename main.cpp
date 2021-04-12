@@ -1,10 +1,42 @@
+/******************************************************************
+ * AUTHOR   : Jaemok C. Lee
+ * ASSIGNMENT #5 : Queues
+ * CLASS    : CS 008 Data Structures
+ * SECTION  : 6:30p - 8:35
+ * DUE DATE : 04/14/2021
+ ******************************************************************/
 #include <iostream>
 #include <cstring>
 
 #include "Airport/Airport.h"
 
+/****************************************************************
+ * show_usage
+ *   This function receives nothing and prints the help
+ *   documentation for this executable.
+ *   -returns  nothing -> This will output the help documentation
+ ***************************************************************/
 void show_usage();
 
+/************************************************************
+*
+* AirportSim
+*___________________________________________________________
+* This program simulates an airport with 1 runway. It
+* generates a report of all planes that crashed, landed
+* and took off as well as some other information.
+*___________________________________________________________
+* INPUTS:
+*   landing_time: int - time spent landing by plane
+*   takeoff: int - time spent taking off by plane
+*   new_landing: int - time between landings
+*   new_takeoff: int - time between takeoffs
+*   fuel: int - fuel of plane before it crashes
+*   time: int - total time to simulate
+*
+* OUTPUTS:
+*   txt file of report.
+*************************************************************/
 int main(int argc, char* argv[]){
     if(argc != 2 && argc != 13)
     {
@@ -105,12 +137,22 @@ int main(int argc, char* argv[]){
         }
     }
 
-    Airport simulation(landing_time, takeoff, new_landing, new_takeoff, fuel, time);
-    simulation.run();
+    try{
+        Airport simulation(landing_time, takeoff, new_landing, new_takeoff, fuel, time);
+        simulation.run();
+    } catch(const char* msg){
+        std::cerr << msg << std::endl;
+    }
 
     return 0;
 }
 
+/****************************************************************
+ * show_usage
+ *   This function receives nothing and prints the help
+ *   documentation for this executable.
+ *   -returns  nothing -> This will output the help documentation
+ ***************************************************************/
 void show_usage()
 {
     std::cerr << "Usage: ./AirportSim.exe [-h] [-l <time>] [-t <time>] [-nl <time>] [-tl <time>] [-f <fuel>] [-T <total_time>] \n\n"

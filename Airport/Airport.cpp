@@ -1,14 +1,51 @@
-#include "Airport/Airport.h"
+#include "Airport.h"
 
-Airport::Airport(int landing, int takingoff, int new_land, int newTakeoff, int fuel, int time){
+/**********************************************************
+ *
+ * CONSTRUCTOR Airport
+ *_________________________________________________________
+ * This function receives values to assign the attributes
+ *_________________________________________________________
+ * PRE-CONDITIONS
+ *   The following need previously defined values:
+ *     landing: int - time spent landing
+ *     takingoff: int - time spent taking off
+ *     new_land: int - time between landings
+ *     new_takeoff: int - time between takeoffs
+ *     fuel: int - fuel left till crash
+ *     time: int - total time for simulation
+ *
+ * POST-CONDITIONS
+ *   This function will create a new Airport object and run
+ *   a simulation based off of the given parameters
+ ***********************************************************/
+Airport::Airport(int landing,     // IN - time spent landing
+                 int takingoff,   // IN - time spent taking off
+                 int new_land,    // IN - time between landing
+                 int new_takeoff, // IN - time between takeoffs
+                 int fuel,        // IN - total fuel of a plane
+                 int time){       // IN - total time to simulate{
     _landing_time = landing;
     _takeoff = takingoff;
     _new_landing = new_land;
-    _new_takeoff = newTakeoff;
+    _new_takeoff = new_takeoff;
     _fuel = fuel;
     _time = time;
 }
 
+/**********************************************************
+ *
+ * FUNCTION run
+ *_________________________________________________________
+ * This function receives nothing and runs the simulation.
+ *_________________________________________________________
+ * PRE-CONDITIONS
+ *   none
+ *
+ * POST-CONDITIONS
+ *   This function will run a simulation based off of the
+ *   values given to the constructor.
+ ***********************************************************/
 void Airport::run(){
     for(int timeElapsed = 1; timeElapsed <= _time; timeElapsed++){
         // add 1 to time of all planes spent in queue
@@ -25,7 +62,7 @@ void Airport::run(){
             _takeoff_Queue.insert(takeOff);
         }
 
-        if(_landing_Queue.isEmpty())
+        if(_landing_Queue.isEmpty() && !_takeoff_Queue.isEmpty())
         {
             _takeoff_Queue.head().add_takeOff();
             if(_takeoff_Queue.head().takeoff_time() == _takeoff){
@@ -34,7 +71,7 @@ void Airport::run(){
                 _takeoff_Queue.remove();
             }
         }
-        else
+        else if(!_landing_Queue.isEmpty())
         {
             if(_landing_Queue.head().crashed()){
                 _crashed++;
@@ -50,20 +87,47 @@ void Airport::run(){
         }
     }
 
+    while(!_landing_Queue.isEmpty()){
+        if(_landing_Queue.head().crashed()){
+            _crashed++;
+        }
+        _landing_Queue.remove();
+    }
+
     generate_report();
 }
 
-void Airport::generate_report(){
-    std::ofstream report("report.txt");
+/**********************************************************
+ *
+ * FUNCTION generate_report
+ *_________________________________________________________
+ * This function receives nothing and generates a report
+ * to a txt file after the simulation is run.
+ *_________________________________________________________
+ * PRE-CONDITIONS
+ *   none
+ *
+ * POST-CONDITIONS
+ *   This function will generate a report of the total time
+ *   simulated, the number of planes that took off, the
+ *   number of planes that landed, number of planes that
+ *   crashed, the average time spent waiting in the takeoff
+ *   queue and the average time spent waiting in the landing
+ *   queue.
+ ***********************************************************/
+void Airport::generate_report() const
+{
+    std::ofstream report("report.txt", std::ios_base::app);
+    double average = 0.0;
     if(report.is_open()){
         report << "--------------Begin Report--------------\n\n";
         report << "Total time simulated: " << _time << "\n";
         report << "Total number of planes that took off: " << _count_takeoff << "\n";
         report << "Total number of planes that landed: " << _count_landing<< "\n";
         report << "Total number of planes that crashed: " << _crashed << "\n";
-        double average = (double)_time_spent_takeoff/_count_takeoff;
+        _count_takeoff == 0 ? average = 0 : average = (double)_time_spent_takeoff/_count_takeoff;
         report << "Average time spent waiting in takeoff queue: " << average << "\n";
-        average = (double)_time_spent_landing/_count_landing;
+        _count_landing== 0 ? average = 0 : average = (double)_time_spent_landing/_count_landing;
         report << "Average time spent waiting in landing queue: " << average << "\n\n";
         report << "--------------End Report---------------\n";
     } else{
