@@ -57,11 +57,11 @@ void Airport::run(){
         _takeoff_Queue.incrementObjects();
 
         // randomly generate arrival and departure times
-        if(rand()%_time < _time/_new_landing){
+        if((rand()%_time + 1) <= _time/_new_landing){
             Airplane land(_landing_time, -1, _fuel);
             _landing_Queue.insert(land);
         }
-        if(rand()%_time < _time/_new_takeoff){
+        if((rand()%_time + 1) <= _time/_new_takeoff){
             Airplane takeOff(-1, _takeoff, -1);
             _takeoff_Queue.insert(takeOff);
         }

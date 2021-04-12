@@ -22,7 +22,7 @@ void show_usage();
 *
 * AirportSim
 *___________________________________________________________
-* This program simulates an airport with 1 runway. It
+* This program simulates an airport with 1 runway, it
 * generates a report of all planes that crashed, landed
 * and took off as well as some other information.
 *___________________________________________________________
