@@ -10,19 +10,19 @@ CONFIG += c++11
 
 SOURCES += \
     # Airplane Object
-    Airplane/Airplane.cpp \
+    Airplane.cpp \
     # Airport Object
-    Airport/Airport.cpp \
+    Airport.cpp \
     # main File
     main.cpp
 
 HEADERS += \
     # Airplance Object
-    Airplane/Airplane.h \
+    Airplane.h \
     # Airport Object
-    Airport/Airport.h \
+    Airport.h \
     # Queue
-    Queue/Queue.h
+    queue.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

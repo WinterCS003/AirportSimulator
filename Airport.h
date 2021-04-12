@@ -4,8 +4,8 @@
 #include <iostream>
 #include <fstream>
 
-#include "../Queue/Queue.h"
-#include "../Airplane/Airplane.h"
+#include "queue.h"
+#include "Airplane.h"
 
 class Airport{
     private:

@@ -8,7 +8,7 @@
 #include <iostream>
 #include <cstring>
 
-#include "Airport/Airport.h"
+#include "Airport.h"
 
 /****************************************************************
  * show_usage
